@@ -1,4 +1,9 @@
-from homeassistant.core import HomeAssistant
+"""The custom_sentences component."""
 
-async def async_setup(hass: HomeAssistant, config) -> bool:
+from homeassistant.core import HomeAssistant
+from homeassistant.helpers.typing import ConfigType
+
+
+async def async_setup(_hass: HomeAssistant, _config: ConfigType) -> bool:
+    """Set up the custom_sentences component."""
     return True
