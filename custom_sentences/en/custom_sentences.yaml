@@ -1,0 +1,11 @@
+language: "en"
+intents:
+  ConversationProcess:
+    data:
+      - sentences:
+          - "(Ask | Tell) {name} [to] {text}"
+        requires_context:
+          domain: conversation
+lists:
+  text:
+    wildcard: true
