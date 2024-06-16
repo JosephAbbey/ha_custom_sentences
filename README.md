@@ -10,4 +10,4 @@ Here are my intents:
 
 ## Installation
 
-Standard HACS installation (you know the drill). Then copy the `custom_intents` folder to your `config` directory in HomeAssistant.
+Standard HACS installation (you know the drill). Then copy the `custom_sentences` folder to your `config` directory in HomeAssistant.
