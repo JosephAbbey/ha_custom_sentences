@@ -1,8 +1,12 @@
 """Intent handlers."""
 
+import datetime
+import random
 import typing
 
 import homeassistant.helpers.config_validation as cv
+import pytz
+import voluptuous as vol
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import intent
 
@@ -10,6 +14,8 @@ from homeassistant.helpers import intent
 async def async_setup_intents(hass: HomeAssistant) -> None:
     """Set up the custom intent handlers."""
     intent.async_register(hass, ConversationProcessIntentHandler())
+    intent.async_register(hass, RandomNumberIntentHandler())
+    intent.async_register(hass, CurrentTimeIntentHandler())
 
 
 class ConversationProcessIntentHandler(intent.IntentHandler):
@@ -73,4 +79,65 @@ class ConversationProcessIntentHandler(intent.IntentHandler):
         # Create and return a response
         response = intent_obj.create_response()
         response.async_set_speech(f"{name} says '{response_text}'")
+        return response
+
+
+class RandomNumberIntentHandler(intent.IntentHandler):
+    """Handle RandomNumber intents."""
+
+    # Type of intent to handle
+    intent_type = "RandomNumber"
+
+    description = "Generate a random number in a range."
+
+    # Optional. A validation schema for slots
+    slot_schema: typing.ClassVar[dict] = {
+        "from": vol.All(vol.Coerce(int), vol.Range(min=0, max=999999999)),
+        "to": vol.All(vol.Coerce(int), vol.Range(min=0, max=999999999)),
+    }
+
+    async def async_handle(self, intent_obj: intent.Intent) -> intent.IntentResponse:
+        """Handle the intent."""
+        # Extract the slot values
+        slots = intent_obj.slots
+        from_value = int(slots["from"]["value"])
+        to_value = int(slots["to"]["value"])
+
+        # Generate a random number
+        result = random.randint(from_value, to_value)  # noqa: S311
+
+        # Create and return a response
+        response = intent_obj.create_response()
+        response.async_set_speech(f"{result}")
+        return response
+
+
+class CurrentTimeIntentHandler(intent.IntentHandler):
+    """Handle CurrentTime intents."""
+
+    # Type of intent to handle
+    intent_type = "CurrentTime"
+
+    description = "Get the current time."
+
+    async def async_handle(self, intent_obj: intent.Intent) -> intent.IntentResponse:
+        """Handle the intent."""
+        # Retrieve the user's timezone from Home Assistant configuration
+        user_timezone = intent_obj.hass.config.time_zone
+
+        # Create a timezone object using pytz
+        timezone = pytz.timezone(user_timezone)
+
+        # Get the current time in UTC
+        utc_now = datetime.datetime.now(datetime.UTC)
+
+        # Convert the current UTC time to the user's timezone
+        user_time = utc_now.astimezone(timezone)
+
+        # Format the time as a string
+        result = user_time.strftime("%H:%M")
+
+        # Create and return a response
+        response = intent_obj.create_response()
+        response.async_set_speech(f"The time is {result}")
         return response
