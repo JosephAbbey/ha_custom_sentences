@@ -1,26 +1,26 @@
-language: 'en'
+language: "en"
 intents:
   ConversationProcess:
     data:
       - sentences:
-          - '(Ask | Tell) {name} [to] {text}'
+          - "(Ask | Tell) {name} [to] {text}"
         requires_context:
           domain: conversation
   RandomNumber:
     data:
       - sentences:
-          - '(Pick|Generate) a [random] number between {random_range:from} and {random_range:to}'
-          - '(Pick|Generate) a [random] number [from] {random_range:from} (through | to) {random_range:to}'
+          - "(Pick|Generate) a [random] number between {random_range:from} and {random_range:to}"
+          - "(Pick|Generate) a [random] number [from] {random_range:from} (through | to) {random_range:to}"
       - sentences:
-          - '(Pick|Generate) a [random] number (below | up to) {random_range:to}'
+          - "(Pick|Generate) a [random] number (below | up to) {random_range:to}"
         slots:
           from: 1
   CurrentTime:
     data:
       - sentences:
           - "What's the time"
-          - 'What is the time'
-          - 'What time is it'
+          - "What is the time"
+          - "What time is it"
 lists:
   text:
     wildcard: true
