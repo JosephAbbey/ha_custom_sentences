@@ -9,10 +9,10 @@ intents:
   RandomNumber:
     data:
       - sentences:
-          - '(Pick|Generate) a [random] number between {random_range:from} and {random_range:to}'
-          - '(Pick|Generate) a [random] number [from] {random_range:from} (through | to) {random_range:to}'
+          - '(Pick|Generate) a [random] number between {from:random_range} and {to:random_range}'
+          - '(Pick|Generate) a [random] number [from] {from:random_range} (through | to) {to:random_range}'
       - sentences:
-          - '(Pick|Generate) a [random] number (below | up to) {random_range:to}'
+          - '(Pick|Generate) a [random] number (below | up to) {to:random_range}'
         slots:
           from: 1
   CurrentTime:
