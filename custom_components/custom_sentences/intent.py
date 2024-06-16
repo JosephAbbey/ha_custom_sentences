@@ -1,5 +1,4 @@
 """Intent handlers."""
-
 import datetime
 import random
 import typing
