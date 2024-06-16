@@ -5,3 +5,9 @@ My collection of custom intents for Home Assistant assist. Intent scripts suck c
 Here are my intents:
 
 - `ConversationProcess`
+- `RandomNumber`
+- `CurrentTime`
+
+## Installation
+
+Standard HACS installation (you know the drill). Then copy the `custom_intents` folder to your `config` directory in HomeAssistant.
