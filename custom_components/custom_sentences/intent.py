@@ -1,4 +1,5 @@
 """Intent handlers."""
+
 import datetime
 import random
 import typing
@@ -30,8 +31,7 @@ class ConversationProcessIntentHandler(intent.IntentHandler):
     # Optional. A validation schema for slots
     slot_schema: typing.ClassVar[dict] = {"name": cv.string, "text": cv.string}
 
-    async def async_handle(self,
-                           intent_obj: intent.Intent) -> intent.IntentResponse:
+    async def async_handle(self, intent_obj: intent.Intent) -> intent.IntentResponse:
         """Handle the intent."""
         # Extract the slot values
         slots = intent_obj.slots
@@ -40,9 +40,8 @@ class ConversationProcessIntentHandler(intent.IntentHandler):
 
         # Define the constraints for matching the target entity
         constraints = intent.MatchTargetsConstraints(
-            name=name,
-            domains=["conversation"],
-            assistant=intent_obj.assistant)
+            name=name, domains=["conversation"], assistant=intent_obj.assistant
+        )
 
         # Match the target entity
         match_result = intent.async_match_targets(intent_obj.hass, constraints)
@@ -64,19 +63,18 @@ class ConversationProcessIntentHandler(intent.IntentHandler):
         result = await intent_obj.hass.services.async_call(
             "conversation",
             "process",
-            {
-                "text": text,
-                "agent_id": matched_entity_id
-            },
+            {"text": text, "agent_id": matched_entity_id},
             blocking=True,
             return_response=True,
         )
 
         # Extract the response text
-        response_text = (result.get("response",
-                                    {}).get("speech",
-                                            {}).get("plain",
-                                                    {}).get("speech", ""))
+        response_text = (
+            result.get("response", {})
+            .get("speech", {})
+            .get("plain", {})
+            .get("speech", "")
+        )
 
         # Create and return a response
         response = intent_obj.create_response()
@@ -98,8 +96,7 @@ class RandomNumberIntentHandler(intent.IntentHandler):
         "to": vol.All(vol.Coerce(int), vol.Range(min=0, max=999999999)),
     }
 
-    async def async_handle(self,
-                           intent_obj: intent.Intent) -> intent.IntentResponse:
+    async def async_handle(self, intent_obj: intent.Intent) -> intent.IntentResponse:
         """Handle the intent."""
         # Extract the slot values
         slots = intent_obj.slots
@@ -123,8 +120,7 @@ class CurrentTimeIntentHandler(intent.IntentHandler):
 
     description = "Get the current time."
 
-    async def async_handle(self,
-                           intent_obj: intent.Intent) -> intent.IntentResponse:
+    async def async_handle(self, intent_obj: intent.Intent) -> intent.IntentResponse:
         """Handle the intent."""
         # Retrieve the user's timezone from Home Assistant configuration
         user_timezone = intent_obj.hass.config.time_zone
