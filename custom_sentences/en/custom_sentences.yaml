@@ -6,25 +6,243 @@ intents:
           - '(Ask | Tell) {name} [to] {text}'
         requires_context:
           domain: conversation
+        lists:
+          text:
+            wildcard: true
   RandomNumber:
     data:
       - sentences:
-          - '(Pick|Generate) a [random] number between {from:random_range} and {to:random_range}'
-          - '(Pick|Generate) a [random] number [from] {from:random_range} (through | to) {to:random_range}'
+          - '(Pick|Generate) a [random] number between {from} and {to}'
+          - '(Pick|Generate) a [random] number [from] {from} (through | to) {to}'
       - sentences:
-          - '(Pick|Generate) a [random] number (below | up to) {to:random_range}'
+          - '(Pick|Generate) a [random] number (below | up to) {to}'
         slots:
           from: 1
   CurrentTime:
     data:
       - sentences:
-          - "What's the time"
-          - 'What is the time'
+          - '<what_is> the time'
           - 'What time is it'
-lists:
-  text:
-    wildcard: true
-  random_range:
-    range:
-      from: 0
-      to: 999999999
+  ReadCalendar:
+    data:
+      - sentences:
+          - '<what_is> [happening] (on | in) [(my | the)] {name} [([for] {relative_day} | [for] (this | on [the]) {relative:this} | [for] next {relative:next} | (on | for) [the] {day} [[of] {month}])] [{before_at_after} {hour:hour}[:{minute:minute}] [{ampm:ampm}]]'
+        lists:
+          relative_day:
+            values:
+              - today
+              - tomorrow
+          relative:
+            values:
+              - monday
+              - tuesday
+              - wednesday
+              - thursday
+              - friday
+              - saturday
+              - sunday
+              - week
+              - weekend
+          day:
+            values:
+              - in: first
+                out: 1
+              - in: second
+                out: 2
+              - in: third
+                out: 3
+              - in: fourth
+                out: 4
+              - in: fifth
+                out: 5
+              - in: sixth
+                out: 6
+              - in: seventh
+                out: 7
+              - in: eighth
+                out: 8
+              - in: ninth
+                out: 9
+              - in: tenth
+                out: 10
+              - in: eleventh
+                out: 11
+              - in: twelfth
+                out: 12
+              - in: thirteenth
+                out: 13
+              - in: fourteenth
+                out: 14
+              - in: fifteenth
+                out: 15
+              - in: sixteenth
+                out: 16
+              - in: seventeenth
+                out: 17
+              - in: eighteenth
+                out: 18
+              - in: nineteenth
+                out: 19
+              - in: twentieth
+                out: 20
+              - in: twenty-first
+                out: 21
+              - in: twenty-second
+                out: 22
+              - in: twenty-third
+                out: 23
+              - in: twenty-fourth
+                out: 24
+              - in: twenty-fifth
+                out: 25
+              - in: twenty-sixth
+                out: 26
+              - in: twenty-seventh
+                out: 27
+              - in: twenty-eighth
+                out: 28
+              - in: twenty-ninth
+                out: 29
+              - in: thirtieth
+                out: 30
+              - in: thirty-first
+                out: 31
+              - in: 1st
+                out: 1
+              - in: 2nd
+                out: 2
+              - in: 3rd
+                out: 3
+              - in: 4th
+                out: 4
+              - in: 5th
+                out: 5
+              - in: 6th
+                out: 6
+              - in: 7th
+                out: 7
+              - in: 8th
+                out: 8
+              - in: 9th
+                out: 9
+              - in: 10th
+                out: 10
+              - in: 11th
+                out: 11
+              - in: 12th
+                out: 12
+              - in: 13th
+                out: 13
+              - in: 14th
+                out: 14
+              - in: 15th
+                out: 15
+              - in: 16th
+                out: 16
+              - in: 17th
+                out: 17
+              - in: 18th
+                out: 18
+              - in: 19th
+                out: 19
+              - in: 20th
+                out: 20
+              - in: 21st
+                out: 21
+              - in: 22nd
+                out: 22
+              - in: 23rd
+                out: 23
+              - in: 24th
+                out: 24
+              - in: 25th
+                out: 25
+              - in: 26th
+                out: 26
+              - in: 27th
+                out: 27
+              - in: 28th
+                out: 28
+              - in: 29th
+                out: 29
+              - in: 30th
+                out: 30
+              - in: 31st
+                out: 31
+          month:
+            values:
+              - in: january
+                out: 1
+              - in: february
+                out: 2
+              - in: march
+                out: 3
+              - in: april
+                out: 4
+              - in: may
+                out: 5
+              - in: june
+                out: 6
+              - in: july
+                out: 7
+              - in: august
+                out: 8
+              - in: september
+                out: 9
+              - in: october
+                out: 10
+              - in: november
+                out: 11
+              - in: december
+                out: 12
+              - in: jan
+                out: 1
+              - in: feb
+                out: 2
+              - in: mar
+                out: 3
+              - in: apr
+                out: 4
+              - in: may
+                out: 5
+              - in: jun
+                out: 6
+              - in: jul
+                out: 7
+              - in: aug
+                out: 8
+              - in: sep
+                out: 9
+              - in: oct
+                out: 10
+              - in: nov
+                out: 11
+              - in: dec
+                out: 12
+          hour:
+            range:
+              from: 0
+              to: 23
+          minute:
+            range:
+              from: 0
+              to: 59
+          ampm:
+            values:
+              - am
+              - pm
+              - in: a.m.
+                out: am
+              - in: p.m.
+                out: pm
+          before_at_after:
+            values:
+              - before
+              - in: until
+                out: before
+              - at
+              - after
+              - in: from
+                out: after
+        requires_context:
+          domain: calendar
