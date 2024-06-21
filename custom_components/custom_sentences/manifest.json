@@ -8,5 +8,5 @@
   "documentation": "https://github.com/josephabbey/ha_custom_sentences",
   "iot_class": "local_push",
   "issue_tracker": "https://github.com/josephabbey/ha_custom_sentences/issues",
-  "version": "v0.0.1"
+  "version": "v0.0.3"
 }
