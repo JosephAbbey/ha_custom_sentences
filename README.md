@@ -7,6 +7,7 @@ Here are my intents:
 - `ConversationProcess`
 - `RandomNumber`
 - `CurrentTime`
+- `ReadCalendar`
 
 ## Installation
 
