@@ -1,4 +1,4 @@
-# Custom Sentences
+# [Custom Sentences](https://github.com/JosephAbbey/ha_custom_sentences/)
 
 My collection of custom intents for Home Assistant assist. The features of intent scripts suck compared to actual python integrations' intents (and should be fixed or replaced).
 
@@ -11,7 +11,7 @@ Here are my intents:
 
 ## Examples (for assist)
 
-For the full syntaxes see [`custom_sentences/en/custom_sentences.yaml`](https://github.com/JosephAbbey/ha_custom_sentences/custom_sentences/en/custom_sentences.yaml).
+For the full syntaxes see [`custom_sentences/en/custom_sentences.yaml`](https://github.com/JosephAbbey/ha_custom_sentences/blob/main/custom_sentences/en/custom_sentences.yaml).
 
 ### `ConversationProcess`
 
@@ -64,3 +64,7 @@ Returns all calendar events within the timeframe specified.
 ## Installation
 
 Standard HACS installation (you know the drill). Then copy the `custom_sentences` folder to your `config` directory in HomeAssistant.
+
+## Requests
+
+Please use GitHub Issues and Discussions to ask for new intents.
