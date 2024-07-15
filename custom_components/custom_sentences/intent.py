@@ -8,8 +8,10 @@ import typing
 import homeassistant.helpers.config_validation as cv
 import pytz
 import voluptuous as vol
+from homeassistant.components.conversation.agent_manager import async_converse
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import intent
+from homeassistant.helpers.intent import IntentResponseTarget, IntentResponseTargetType
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -63,26 +65,33 @@ class ConversationProcessIntentHandler(intent.IntentHandler):
             response.async_set_speech(f"I am {name}!")
             return response
 
-        # Call the conversation.process service and wait for the result
-        result = await intent_obj.hass.services.async_call(
-            "conversation",
-            "process",
-            {"text": text, "agent_id": matched_entity_id},
-            blocking=True,
-            return_response=True,
+        result = await async_converse(
+            hass=intent_obj.hass,
+            text=text,
+            conversation_id=None,
+            context=intent_obj.context,
+            language=intent_obj.language,
+            agent_id=matched_entity_id,
+            device_id=intent_obj.device_id,
         )
 
         # Extract the response text
-        response_text = (
-            result.get("response", {})
-            .get("speech", {})
-            .get("plain", {})
-            .get("speech", "")
-        )
+        response_text = result.response.speech["plain"]["speech"]
 
         # Create and return a response
         response = intent_obj.create_response()
         response.async_set_speech(f"{name} says '{response_text}'")
+
+        response.async_set_results(
+            [
+                IntentResponseTarget(
+                    type=IntentResponseTargetType.ENTITY,
+                    name=name,
+                    id=matched_entity_id,
+                )
+            ]
+        )
+
         return response
 
 
